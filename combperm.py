@@ -7,12 +7,31 @@ Functions to calculate combinaions and permutations
 @author: vpe
 """
 
-#TODO: input check (both int, n > 0, 0 < r <= n)
-
 #TODO: add class, where you can load list of objects and add methods to show all combinations
 #       Current functions also add to the class
 
+
+
+
+
 def factorial(n):
+    """
+    Calculates factorial of n
+
+    Parameters
+    ----------
+    n : int
+        Positive integer.
+
+    Returns
+    -------
+    factorial : int
+        Factorial of n.
+
+    """
+    if n <= 0 or type(n) != int:
+        return 0
+    
     factorial = 1
     if int(n) >= 1:
         for i in range (1,int(n)+1):
@@ -39,9 +58,9 @@ def CombinationWithRepetition(n, r):
     Parameters
     ----------
     n : int
-        Amount of different types.
+        Amount of different types. Positive integer.
     r : int
-        Amount of selected types.
+        Amount of selected types. Positive integer, less or equal n.
 
     Returns
     -------
@@ -49,6 +68,10 @@ def CombinationWithRepetition(n, r):
         Amount of combinations.
 
     """
+    
+    if type(n) != int or type(r) != int or (n <= 0) or not 0 < r <= n:
+        return 0
+    
     return int(factorial(n+r-1)/(factorial(r) * factorial(n-1)))
 
 
@@ -69,9 +92,9 @@ def CombinationWithoutRepetition(n, r):
     Parameters
     ----------
     n : int
-        Amount of different types.
+        Amount of different types. Positive integer.
     r : int
-        Amount of selected types.
+        Amount of selected types. Positive integer, less or equal n.
 
     Returns
     -------
@@ -79,6 +102,8 @@ def CombinationWithoutRepetition(n, r):
         Amount of combinations.
 
     """
+    if type(n) != int or type(r) != int or (n <= 0) or not 0 < r <= n:
+        return 0
     return int(factorial(n)/(factorial(r) * factorial(n-r)))
 
 
@@ -108,9 +133,9 @@ def PermutationWithRepetition(n, r):
     Parameters
     ----------
     n : int
-        Amount of different types.
+        Amount of different types. Positive integer.
     r : int
-        Amount of selected types.
+        Amount of selected types. Positive integer, less or equal n.
 
     Returns
     -------
@@ -118,6 +143,8 @@ def PermutationWithRepetition(n, r):
         Amount of permutaions.
 
     """
+    if type(n) != int or type(r) != int or (n <= 0) or not 0 < r <= n:
+        return 0
     return int(n**r)
 
 
@@ -144,9 +171,9 @@ def PermutationWithoutRepetition(n, r):
     Parameters
     ----------
     n : int
-        Amount of different types.
+        Amount of different types. Positive integer.
     r : int
-        Amount of selected types.
+        Amount of selected types. Positive integer, less or equal n.
 
     Returns
     -------
@@ -154,4 +181,6 @@ def PermutationWithoutRepetition(n, r):
         Amount of combinations.
 
     """
+    if type(n) != int or type(r) != int or (n <= 0) or not 0 < r <= n:
+        return 0
     return int(factorial(n)/factorial(n-r))
