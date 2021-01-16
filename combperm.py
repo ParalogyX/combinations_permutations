@@ -6,9 +6,8 @@ Functions to calculate combinaions and permutations
 
 @author: vpe
 """
+import itertools
 
-#TODO: Add methods to show all combinations
-#       Current functions also add to the class (may be not needed, let's think)
 
 def factorial(n):
     """
@@ -25,7 +24,7 @@ def factorial(n):
         Factorial of n.
 
     """
-    if n <= 0 or type(n) != int:
+    if n < 0 or type(n) != int:
         raise RuntimeError("Wrong arguments")
     
     factorial = 1
@@ -72,7 +71,9 @@ class combinaionsAndPermutations(object):
         return self.collection
 
     def GetTypeOfCombination(self):
-        return self.typeOfCombination
+        option = {1: "Combination With Repetition", 2: "Combination Without Repetition",
+                  3: "Permutation With Repetition", 4: "Permutation Without Repetition"}
+        return option[self.typeOfCombination]
     
     def GetItemsInCombination(self):
         return self.r
@@ -86,6 +87,27 @@ class combinaionsAndPermutations(object):
                   3: PermutationWithRepetition, 4: PermutationWithoutRepetition}
         return option[self.typeOfCombination](self.n, self.r)
         
+    def AllCombinations(self, MoreThanHundred = False, safety = True):
+        
+        if (self.AmountOfCombinations() > 100 and not MoreThanHundred):
+            print ("Too many combinations (> 100). You need to call function\
+                   AmountOfCombinations with parameter MoreThanHundred = True")
+            return []
+        
+        if self.AmountOfCombinations() > 10000 and safety:
+            print ("Too many combinations (> 10000). Risk of freezing!!!. You need to call function AmountOfCombinations with parameter safety = False.")
+            return
+        option = {1: itertools.combinations_with_replacement, 2: itertools.combinations,
+                  3: itertools.product, 4: itertools.permutations}
+        
+        result = []
+        if self.typeOfCombination == 3:
+            for i in itertools.product(self.collection, repeat = self.r):
+                result.append(i)
+        else:
+            for i in option[self.typeOfCombination](self.collection, self.r):
+                result.append(i)
+        return result
 
 def CombinationWithRepetition(n, r):
     """
