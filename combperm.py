@@ -87,26 +87,33 @@ class combinaionsAndPermutations(object):
                   3: PermutationWithRepetition, 4: PermutationWithoutRepetition}
         return option[self.typeOfCombination](self.n, self.r)
         
-    def AllCombinations(self, MoreThanHundred = False, safety = True):
+    def AllCombinations(self, maxLines = 10):
         
-        if (self.AmountOfCombinations() > 100 and not MoreThanHundred):
-            print ("Too many combinations (> 100). You need to call function\
-                   AmountOfCombinations with parameter MoreThanHundred = True")
-            return []
+        # if (self.AmountOfCombinations() > 100 and not MoreThanHundred):
+        #     print ("Too many combinations (> 100). You need to call function\
+        #            AmountOfCombinations with parameter MoreThanHundred = True")
+        #     return []
         
-        if self.AmountOfCombinations() > 10000 and safety:
-            print ("Too many combinations (> 10000). Risk of freezing!!!. You need to call function AmountOfCombinations with parameter safety = False.")
-            return
+        # if self.AmountOfCombinations() > 10000 and safety:
+        #     print ("Too many combinations (> 10000). Risk of freezing!!!. You need to call function AmountOfCombinations with parameter safety = False.")
+        #     return
         option = {1: itertools.combinations_with_replacement, 2: itertools.combinations,
                   3: itertools.product, 4: itertools.permutations}
         
         result = []
+        i = 0
         if self.typeOfCombination == 3:
-            for i in itertools.product(self.collection, repeat = self.r):
-                result.append(i)
+            for comb in itertools.product(self.collection, repeat = self.r):
+                result.append(comb)
+                i += 1
+                if i >= maxLines:
+                    break
         else:
-            for i in option[self.typeOfCombination](self.collection, self.r):
-                result.append(i)
+            for comb in option[self.typeOfCombination](self.collection, self.r):
+                result.append(comb)
+                i += 1
+                if i >= maxLines:
+                    break
         return result
 
 def CombinationWithRepetition(n, r):

@@ -11,13 +11,13 @@ import combperm
 #If tst = 2 only stringList
 #If tst = 3 - both
 
-tst = 2
+tst = 1
 
 if tst in (1,3): digitList = list(range(10))
 stringList = 'abcdefhg'
 
 if tst in (1,3): digitCode = combperm.combinaionsAndPermutations(digitList)
-stringCode = combperm.combinaionsAndPermutations(stringList)
+if tst in (2,3): stringCode = combperm.combinaionsAndPermutations(stringList)
 
 for i in range(1,5):
     print(i)
