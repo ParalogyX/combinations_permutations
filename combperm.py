@@ -38,6 +38,32 @@ class combinaionsAndPermutations(object):
     
     
     def __init__(self, collection, typeOfCombination = 1, r = 1):
+        """
+        Initialization of combinaionsAndPermutations.
+
+        Parameters
+        ----------
+        collection : list, tuple, str or dict
+            Not empty iterable collection of items used for combinations.
+        typeOfCombination : 1, 2, 3 or 4, optional
+            1 - Combination With Repetition.
+            2 - Combination Without Repetition.
+            3 - Permutation With Repetition.
+            4 - Permutation Without Repetition. The default is 1.
+        r : positive int, optional
+            Amount of items in combination. The default is 1.
+
+        Raises
+        ------
+        RuntimeError
+            If collection is not iterable, or typeOfCombination is not 1, 2, 3 or 4, 
+            or r is more than lenght of collection, generates RuntimeError "Wrong arguments".
+
+        Returns
+        -------
+        None.
+
+        """
             
         if (type (collection) not in (list, tuple, str, dict) or 
             typeOfCombination not in (1,2,3,4) or 
@@ -50,6 +76,25 @@ class combinaionsAndPermutations(object):
         self.n = len(collection)
         
     def SetCollection(self, collection):
+        """
+        Update a collecion. Automatically decreases Amount of items in combination (r) 
+        in case current value is bigger, than collection lenght
+
+        Parameters
+        ----------
+        collection : Not empty list, tuple, str or dict
+            Iterable collection of items used for combinations.
+
+        Raises
+        ------
+        RuntimeError
+            If collection is not iterable generates RuntimeError "Wrong arguments".
+
+        Returns
+        -------
+        None.
+
+        """
         if type (collection) not in (list, tuple, str, dict):
             raise RuntimeError("Wrong arguments")
         self.collection = collection
@@ -58,45 +103,140 @@ class combinaionsAndPermutations(object):
             self.r = self.n
         
     def SetTypeOfCombination(self, typeOfCombination):
+        """
+        Update type of combination
+
+        Parameters
+        ----------
+        typeOfCombination : 1, 2, 3 or 4.
+            1 - Combination With Repetition.
+            2 - Combination Without Repetition.
+            3 - Permutation With Repetition.
+            4 - Permutation Without Repetition.
+
+        Raises
+        ------
+        RuntimeError
+            If typeOfCombination is not 1, 2, 3 or 4 generates RuntimeError "Wrong arguments".
+
+        Returns
+        -------
+        None.
+
+        """
         if typeOfCombination not in (1,2,3,4):
             raise RuntimeError("Wrong arguments")
         self.typeOfCombination = typeOfCombination
         
     def SetItemsInCombination(self, r):
+        """
+        Update amount of items in combination
+
+        Parameters
+        ----------
+        r : positive int
+            Amount of items in combination..
+
+        Raises
+        ------
+        RuntimeError
+            If r is more than lenght of collection, generates RuntimeError "Wrong arguments".
+
+        Returns
+        -------
+        None.
+
+        """
         if not 0 < r <= len(self.collection):
             raise RuntimeError("Wrong arguments")
         self.r = r
 
     def GetCollection(self):
+        """
+        Returns collection
+
+        Returns
+        -------
+        list, tuple, str or dict.
+            Current collection of items.
+
+        """
         return self.collection
 
     def GetTypeOfCombination(self):
+        """
+        Returns name of type of combination
+        1 - Combination With Repetition.
+        2 - Combination Without Repetition.
+        3 - Permutation With Repetition.
+        4 - Permutation Without Repetition.
+
+        Returns
+        -------
+        str
+            Type of combination.
+
+        """
         option = {1: "Combination With Repetition", 2: "Combination Without Repetition",
                   3: "Permutation With Repetition", 4: "Permutation Without Repetition"}
         return option[self.typeOfCombination]
     
     def GetItemsInCombination(self):
+        """
+
+        Returns
+        -------
+        int
+            Amount of items in combination.
+
+        """
         return self.r
     
     def GetAmountOfElements(self):
+        """
+        
+
+        Returns
+        -------
+        int
+            Lenght of collection.
+
+        """
         return self.n
     
     
     def AmountOfCombinations(self):
+        """
+        Calculates amount of all possible combinations of selected type
+
+        Returns
+        -------
+        int
+            Amount of combinations.
+
+        """
         option = {1: CombinationWithRepetition, 2: CombinationWithoutRepetition,
                   3: PermutationWithRepetition, 4: PermutationWithoutRepetition}
         return option[self.typeOfCombination](self.n, self.r)
         
     def AllCombinations(self, maxLines = 10):
-        
-        # if (self.AmountOfCombinations() > 100 and not MoreThanHundred):
-        #     print ("Too many combinations (> 100). You need to call function\
-        #            AmountOfCombinations with parameter MoreThanHundred = True")
-        #     return []
-        
-        # if self.AmountOfCombinations() > 10000 and safety:
-        #     print ("Too many combinations (> 10000). Risk of freezing!!!. You need to call function AmountOfCombinations with parameter safety = False.")
-        #     return
+        """
+        Returns list of all possible combinatios of selected type, limited by maxLines.
+        WARNING: Large maxLines (more than ~10000000) can cause memory issues and freezing.
+                 Always check AmountOfCombinations() before and setup good maxLines.
+
+        Parameters
+        ----------
+        maxLines : int, optional
+            Limitation of output. The default is 10.
+
+        Returns
+        -------
+        result : list
+            First maxLines of all possible combinations.
+
+        """
+
         option = {1: itertools.combinations_with_replacement, 2: itertools.combinations,
                   3: itertools.product, 4: itertools.permutations}
         
